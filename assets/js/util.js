@@ -7,9 +7,9 @@ document.addEventListener("DOMContentLoaded", function() {
         const phone = document.getElementById("phone").value;
         const message = document.getElementById("message1").value;
         
-        const telegramMessage = "📥📥 WASILIANA NA MIMI 📥📥\n\nName: " + name + "\nPhone: " + phone + "\nMessage: " + message + "\n\n\n\n_________SMS YA MTEJA_________" + "\n\nHABARI!  " + name + "\nNaomba kukuhudumia" + "\n\nSMG OFFICE. Asante!" + "\n\n\n_______________________________";
+        const telegramMessage = "🌐 SMG OFFICE New message 🌐\n\nName: " + name + "\nPhone: " + phone + "\nMessage: " + message + "\n\n\n\n_________SMS YA MTEJA_________" + "\n\nHABARI!  " + name + "\nNaomba kukuhudumia" + "\n\nSMG OFFICE. Asante!" + "\n\n\n_______________________________"+ "\n\n🧲 Imeandikwa kutoka smg office frist page";
 
-        fetch("https://api.telegram.org/bot6755944681:AAHt79bxx56EHxe4W2ZWzsxTcHRY6Ix8OhU/sendMessage?chat_id=5479041930&text=" + encodeURIComponent(telegramMessage))
+        fetch("https://api.telegram.org/bot7101784171:AAEgdyinnaj9BZnpSo0TVgVJjkDj5aqiYB8/sendMessage?chat_id=5479041930&text=" + encodeURIComponent(telegramMessage))
              .then(response => {
                 if (!response.ok) {
                     throw new Error("Failed to send message.");
