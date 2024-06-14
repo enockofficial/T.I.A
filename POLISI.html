@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Msahada Kiganjani</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        h1 {
+            color: #4CAF50;
+        }
+        #location {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Msaada Kiganjani</h1>
+    <div id="location">Inapata taarifa zako za eneo...</div>
+
+    <script>
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+            } else {
+                document.getElementById("location").innerHTML = "Geolocation haipatikani kwenye kivinjari chako.";
+            }
+        }
+
+        function showPosition(position) {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=10&addressdetails=1`)
+                .then(response => response.json())
+                .then(data => {
+                    const address = data.address;
+                    let locationInfo = "";
+                    if (address.continent) locationInfo += `Bara: ${address.continent}, `;
+                    if (address.country) locationInfo += `Nchi: ${address.country}, `;
+                    if (address.city) locationInfo += `Mji: ${address.city}, `;
+                    if (address.suburb) locationInfo += `Eneo: ${address.suburb}, `;
+                    if (address.neighbourhood) locationInfo += `Kitongoji: ${address.neighbourhood}`;
+
+                    document.getElementById("location").innerHTML = locationInfo;
+                })
+                .catch(error => {
+                    document.getElementById("location").innerHTML = "Imeshindwa kupata taarifa za eneo lako.";
+                    console.error('Error:', error);
+                });
+        }
+
+        function showError(error) {
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                    document.getElementById("location").innerHTML = "Mtumiaji amekataa ombi la kupata eneo.";
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    document.getElementById("location").innerHTML = "Taarifa za eneo hazipatikani.";
+                    break;
+                case error.TIMEOUT:
+                    document.getElementById("location").innerHTML = "Ombi la kupata eneo limekwisha muda.";
+                    break;
+                case error.UNKNOWN_ERROR:
+                    document.getElementById("location").innerHTML = "Hitilafu isiyojulikana imetokea.";
+                    break;
+            }
+        }
+
+        // Pata eneo mara tu ukurasa unapopakiwa
+        window.onload = getLocation;
+    </script>
+</body>
+</html>
