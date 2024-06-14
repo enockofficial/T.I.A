@@ -35,17 +35,17 @@
         function showPosition(position) {
             const lat = position.coords.latitude;
             const lon = position.coords.longitude;
-            fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=10&addressdetails=1`)
+            fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}&zoom=10`)
                 .then(response => response.json())
                 .then(data => {
-                    const address = data.address;
-                    let locationInfo = "";
-                    if (address.continent) locationInfo += `Bara: ${address.continent}, `;
-                    if (address.country) locationInfo += `Nchi: ${address.country}, `;
-                    if (address.city) locationInfo += `Mji: ${address.city}, `;
-                    if (address.suburb) locationInfo += `Eneo: ${address.suburb}, `;
-                    if (address.neighbourhood) locationInfo += `Kitongoji: ${address.neighbourhood}`;
+                    const { address } = data;
+                    let locationInfo = "Uko: ";
+                    if (address.country) locationInfo += `${address.country}, `;
+                    if (address.city) locationInfo += `${address.city}, `;
+                    if (address.suburb) locationInfo += `${address.suburb}, `;
+                    if (address.neighbourhood) locationInfo += `${address.neighbourhood}`;
 
+                    // Onyesha taarifa za eneo
                     document.getElementById("location").innerHTML = locationInfo;
                 })
                 .catch(error => {
